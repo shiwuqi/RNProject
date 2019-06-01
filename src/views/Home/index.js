@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Dimensions, StyleSheet, TouchableOpacity, View, Text, Image, FlatList } from 'react-native'
-import { getStatusBarHeight } from '../../utils/screen'
+import { getStatusBarHeight, width } from '../../utils/screen'
 
-const { width } = Dimensions.get('window')
 const cols = 4;
 const vMargin = 140;
 const cellWH = (width - vMargin) / cols;
@@ -43,15 +42,16 @@ export default class Home extends Component {
                 key: '海鲜',
                 image: require('../../assets/home/seafood.png')
             }
-        ]
+        ],
+        response: {}
     }
 
     _renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity activeOpacity={0.9}>
                 <View style={styles.item}>
-                    <Image source={ item.image } style={{width: cellWH, height: cellWH, borderRadius: 5}}></Image>
-                    <Text style={{marginTop: 5, textAlign: 'center'}} numberOfLines={5}>{item.key}</Text>
+                    <Image source={item.image} style={styles.itemImg}></Image>
+                    <Text style={styles.itemText} numberOfLines={5}>{item.key}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -61,15 +61,13 @@ export default class Home extends Component {
         const paddingBar = getStatusBarHeight()
         return (
             <View style={{ paddingTop: paddingBar }}>
-                {/* <Text>Home</Text> */}
-                {/* <Button title='Go to Mine' onPress={() => this.props.navigation.navigate('Mine')}></Button> */}
                 <FlatList
                     data={this.state.data}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => index}
-                    contentContainerStyle={styles.list_container}
+                    numColumns={cols}
+                    horizontal={false}
                 />
-                {/* <Image source={ hotpot }></Image> */}
             </View>
         )
     }
@@ -84,15 +82,23 @@ const styles = StyleSheet.create({
     list_container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        flexWrap: 'wrap',
         alignItems: 'center',
         paddingHorizontal: 10,
     },
     item: {
         width: cellWH,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 16,
+        marginRight: 20,
         marginTop: hMargin,
         alignItems: 'center',
+    },
+    itemImg: {
+        width: cellWH,
+        height: cellWH,
+        borderRadius: 5
+    },
+    itemText: {
+        marginTop: 5,
+        textAlign: 'center'
     }
 })
