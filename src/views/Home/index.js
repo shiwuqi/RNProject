@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions, StyleSheet, TouchableOpacity, View, Text, Image, FlatList } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Text, Image, FlatList, ScrollView } from 'react-native'
 import { getStatusBarHeight, width } from '../../utils/screen'
 
 const cols = 4;
@@ -43,6 +43,64 @@ export default class Home extends Component {
                 image: require('../../assets/home/seafood.png')
             }
         ],
+        foods: [
+            {
+                title: '五颗星海鲜烤肉自助餐厅',
+                subTitle: '[八佰伴]海鲜自助晚餐',
+                price: '119',
+                prePrice: '129',
+                sale: '33215',
+                image: require('../../assets/home/common-scroll_food.jpg')
+            },
+            {
+                title: '五颗星海鲜烤肉自助餐厅',
+                subTitle: '[八佰伴]海鲜自助晚餐',
+                price: '119',
+                prePrice: '129',
+                sale: '33215',
+                image: require('../../assets/home/common-scroll_food.jpg')
+            },
+            {
+                title: '五颗星海鲜烤肉自助餐厅',
+                subTitle: '[八佰伴]海鲜自助晚餐',
+                price: '119',
+                prePrice: '129',
+                sale: '33215',
+                image: require('../../assets/home/common-scroll_food.jpg')
+            },
+            {
+                title: '五颗星海鲜烤肉自助餐厅',
+                subTitle: '[八佰伴]海鲜自助晚餐',
+                price: '119',
+                prePrice: '129',
+                sale: '33215',
+                image: require('../../assets/home/common-scroll_food.jpg')
+            },
+            {
+                title: '五颗星海鲜烤肉自助餐厅',
+                subTitle: '[八佰伴]海鲜自助晚餐',
+                price: '119',
+                prePrice: '129',
+                sale: '33215',
+                image: require('../../assets/home/common-scroll_food.jpg')
+            },
+            {
+                title: '五颗星海鲜烤肉自助餐厅',
+                subTitle: '[八佰伴]海鲜自助晚餐',
+                price: '119',
+                prePrice: '129',
+                sale: '33215',
+                image: require('../../assets/home/common-scroll_food.jpg')
+            },
+            {
+                title: '五颗星海鲜烤肉自助餐厅',
+                subTitle: '[八佰伴]海鲜自助晚餐',
+                price: '119',
+                prePrice: '129',
+                sale: '33215',
+                image: require('../../assets/home/common-scroll_food.jpg')
+            }
+        ],
         response: {}
     }
 
@@ -57,18 +115,50 @@ export default class Home extends Component {
         )
     }
 
+    _renderFoods = ({ item, index }) => {
+        return (
+            <TouchableOpacity activeOpacity={0.9}>
+                <View style={styles.foodItem}>
+                    <Image source={item.image} style={styles.foodImg}></Image>
+                    <View style={{ flex: 1 }}>
+                        <View style={styles.foodTitle}>
+                            <Text>{item.title}</Text>
+                        </View>
+                        <View style={styles.foodSubTitle}>
+                            <Text style={styles.foodSubTitleText}>{item.subTitle}</Text>
+                        </View>
+                        <View style={styles.foodDetail}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ marginRight: 4, fontSize: 16, color: '#F60' }}>{item.price}元</Text>
+                                <Text style={{ fontSize: 12, color: '#666' }}>门市价:{item.prePrice}元</Text>
+                            </View>
+                            <View>
+                                <Text style={{ fontSize: 12, }}>已售{item.sale}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     render() {
         const paddingBar = getStatusBarHeight()
         return (
-            <View style={{ paddingTop: paddingBar }}>
+            <ScrollView style={{ paddingTop: paddingBar }}>
                 <FlatList
                     data={this.state.data}
                     renderItem={this._renderItem}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index.toString()}
                     numColumns={cols}
                     horizontal={false}
                 />
-            </View>
+                <FlatList
+                    data={this.state.foods}
+                    renderItem={this._renderFoods}
+                    keyExtractor={(item, index) => index.toString()}
+                />
+            </ScrollView>
         )
     }
 }
@@ -76,7 +166,7 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f0efed',
         paddingVertical: 15
     },
     list_container: {
@@ -100,5 +190,34 @@ const styles = StyleSheet.create({
     itemText: {
         marginTop: 5,
         textAlign: 'center'
+    },
+    foodItem: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20,
+        paddingHorizontal: 10
+    },
+    foodImg: {
+        width: 70,
+        height: 70,
+        marginRight: 6,
+    },
+    foodTitle: {
+        marginBottom: 5,
+        fontWeight: '400',
+        color: '#333'
+    },
+    foodSubTitle: {
+        marginBottom: 12
+    },
+    foodSubTitleText: {
+        fontSize: 12,
+        color: '#666'
+    },
+    foodDetail: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     }
 })

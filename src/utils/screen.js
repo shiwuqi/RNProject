@@ -33,6 +33,7 @@ export const isIphoneX = (Platform.OS === 'ios' && (Number(((height/width)+"").s
 
 //状态栏的高度
 export function getStatusBarHeight() {
+    console.log(Platform.OS)
     if (Platform.OS == 'android') return StatusBar.currentHeight;
     if (isIphoneX) {
         return 44
