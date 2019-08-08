@@ -84,9 +84,11 @@ export default class Home extends Component {
     }
 
     _onEndReached = () => {
-        this.setState({
-            foods: [...this.state.foods, ...foods]
-        })
+        if (this.state.foods.length < 100) {
+            this.setState({
+                foods: [...this.state.foods, ...foods]
+            })
+        }
     }
 
     _renderHeader = () => {
@@ -182,8 +184,9 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     itemText: {
-        marginTop: 5,
-        textAlign: 'center'
+        marginTop: 8,
+        textAlign: 'center',
+        fontSize: 13
     },
     foodItem: {
         width: '100%',
