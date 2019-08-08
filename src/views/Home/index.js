@@ -6,6 +6,20 @@ const cols = 4;
 const vMargin = 140;
 const cellWH = (width - vMargin) / cols;
 const hMargin = 20;
+const foodImg = require('../../assets/home/common-scroll_food.jpg');
+const food = {
+    title: '五颗星海鲜烤肉自助餐厅',
+    subTitle: '[八佰伴]海鲜自助晚餐',
+    price: '119',
+    prePrice: '129',
+    sale: '33215',
+    image: foodImg
+}
+let foods = []
+for (let i = 0; i < 10; i++) {
+    foods.push(food)
+}
+
 
 export default class Home extends Component {
     state = {
@@ -43,65 +57,48 @@ export default class Home extends Component {
                 image: require('../../assets/home/seafood.png')
             }
         ],
-        foods: [
-            {
-                title: '五颗星海鲜烤肉自助餐厅',
-                subTitle: '[八佰伴]海鲜自助晚餐',
-                price: '119',
-                prePrice: '129',
-                sale: '33215',
-                image: require('../../assets/home/common-scroll_food.jpg')
-            },
-            {
-                title: '五颗星海鲜烤肉自助餐厅',
-                subTitle: '[八佰伴]海鲜自助晚餐',
-                price: '119',
-                prePrice: '129',
-                sale: '33215',
-                image: require('../../assets/home/common-scroll_food.jpg')
-            },
-            {
-                title: '五颗星海鲜烤肉自助餐厅',
-                subTitle: '[八佰伴]海鲜自助晚餐',
-                price: '119',
-                prePrice: '129',
-                sale: '33215',
-                image: require('../../assets/home/common-scroll_food.jpg')
-            },
-            {
-                title: '五颗星海鲜烤肉自助餐厅',
-                subTitle: '[八佰伴]海鲜自助晚餐',
-                price: '119',
-                prePrice: '129',
-                sale: '33215',
-                image: require('../../assets/home/common-scroll_food.jpg')
-            },
-            {
-                title: '五颗星海鲜烤肉自助餐厅',
-                subTitle: '[八佰伴]海鲜自助晚餐',
-                price: '119',
-                prePrice: '129',
-                sale: '33215',
-                image: require('../../assets/home/common-scroll_food.jpg')
-            },
-            {
-                title: '五颗星海鲜烤肉自助餐厅',
-                subTitle: '[八佰伴]海鲜自助晚餐',
-                price: '119',
-                prePrice: '129',
-                sale: '33215',
-                image: require('../../assets/home/common-scroll_food.jpg')
-            },
-            {
-                title: '五颗星海鲜烤肉自助餐厅',
-                subTitle: '[八佰伴]海鲜自助晚餐',
-                price: '119',
-                prePrice: '129',
-                sale: '33215',
-                image: require('../../assets/home/common-scroll_food.jpg')
-            }
-        ],
-        response: {}
+        foods: [],
+        response: {},
+        refreshing: false
+    }
+
+    componentDidMount() {
+        this.setState({
+            foods 
+        })
+    }
+
+    _onRefresh = () => {
+        const _this = this
+        this.setState({
+            refreshing: true
+        })
+        setTimeout(() => {
+            _this.setState({
+                foods
+            })
+        }, 1000)
+        this.setState({
+            refreshing: false
+        })
+    }
+
+    _onEndReached = () => {
+        this.setState({
+            foods: [...this.state.foods, ...foods]
+        })
+    }
+
+    _renderHeader = () => {
+        return (
+            <FlatList
+                data={this.state.data}
+                renderItem={this._renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={cols}
+                horizontal={false}
+            />
+        )
     }
 
     _renderItem = ({ item, index }) => {
@@ -145,20 +142,17 @@ export default class Home extends Component {
     render() {
         const paddingBar = getStatusBarHeight()
         return (
-            <ScrollView style={{ paddingTop: paddingBar }}>
+            <View style={{ paddingTop: paddingBar }}>
                 <FlatList
-                    data={this.state.data}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => index.toString()}
-                    numColumns={cols}
-                    horizontal={false}
-                />
-                <FlatList
+                    ListHeaderComponent={this._renderHeader}
                     data={this.state.foods}
                     renderItem={this._renderFoods}
+                    onRefresh={this._onRefresh}
+                    onEndReached={this._onEndReached}
+                    refreshing={this.state.refreshing}
                     keyExtractor={(item, index) => index.toString()}
                 />
-            </ScrollView>
+            </View>
         )
     }
 }
