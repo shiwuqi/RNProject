@@ -75,18 +75,16 @@ export default class Home extends Component {
         })
         setTimeout(() => {
             _this.setState({
-                foods
+                foods,
+                refreshing: false
             })
         }, 1000)
-        this.setState({
-            refreshing: false
-        })
     }
 
     _onEndReached = () => {
         if (this.state.foods.length < 100) {
-            this.setState({
-                foods: [...this.state.foods, ...foods]
+            this.setState((prevState) => {
+                return { foods: [...prevState.foods, ...foods] }
             })
         }
     }
