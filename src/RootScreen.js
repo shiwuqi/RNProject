@@ -6,6 +6,7 @@ import Home from './views/Home'
 import Chat from './views/Chat'
 import Mine from './views/Mine'
 import Other from './views/Other'
+import Detail from './views/Detail'
 
 const TabNavigator = createBottomTabNavigator({
     Home: {
@@ -74,8 +75,12 @@ const Navigators = createStackNavigator(
         },
         Other: {
             screen: Other,
+            navigationOptions: {}
+        },
+        Detail: {
+            screen: Detail,
             navigationOptions: {
-                
+                title: '详情'
             }
         }
     }

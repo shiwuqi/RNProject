@@ -103,7 +103,7 @@ export default class Home extends Component {
 
     _renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity activeOpacity={0.9}>
+            <TouchableOpacity activeOpacity={0.9} onPress={() => this.props.navigation.navigate('Detail')}>
                 <View style={styles.item}>
                     <Image source={item.image} style={styles.itemImg}></Image>
                     <Text style={styles.itemText} numberOfLines={5}>{item.key}</Text>
@@ -114,7 +114,7 @@ export default class Home extends Component {
 
     _renderFoods = ({ item, index }) => {
         return (
-            <TouchableOpacity activeOpacity={0.9}>
+            <TouchableOpacity activeOpacity={0.9} onPress={() => this.props.navigation.navigate('Detail')}>
                 <View style={styles.foodItem}>
                     <Image source={item.image} style={styles.foodImg}></Image>
                     <View style={{ flex: 1 }}>
