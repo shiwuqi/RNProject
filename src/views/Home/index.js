@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, TouchableOpacity, View, Text, Image, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Text, Image, FlatList } from 'react-native'
 import { getStatusBarHeight, width } from '../../utils/screen'
 
 const cols = 4;
