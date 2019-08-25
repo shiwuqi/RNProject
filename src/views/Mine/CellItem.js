@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native'
-const arrrowRight = require('../../assets/icons/icon-arrow_right.png')
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 class CellItem extends Component {
     render() {
@@ -10,8 +10,11 @@ class CellItem extends Component {
                 <View style={styles.cell}>
                     <Image source={data.icon} style={styles.icon}></Image>
                     <Text style={{ flex: 1 }}>{data.title}</Text>
-                    <Text style={{ color: '#999999' }}>{data.subTitle}</Text>
-                    <Image source={arrrowRight} style={styles.arrow}></Image>
+                    <Text style={{ marginRight: 6, color: '#999999' }}>{data.subTitle}</Text>
+                    <Ionicons
+                        name='ios-arrow-forward'
+                        size={18}
+                        color='#999999'></Ionicons>
                 </View>
             </TouchableOpacity>
         )

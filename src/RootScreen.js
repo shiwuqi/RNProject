@@ -7,6 +7,8 @@ import Chat from './views/Chat'
 import Mine from './views/Mine'
 import Other from './views/Other'
 import Detail from './views/Detail'
+import Search from './views/Search'
+import City from './views/City'
 
 const TabNavigator = createBottomTabNavigator({
     Home: {
@@ -71,6 +73,7 @@ const Navigators = createStackNavigator(
             screen: TabNavigator,
             navigationOptions: {
                 header: () => null,
+                headerBackTitle: null
             }
         },
         Other: {
@@ -80,7 +83,19 @@ const Navigators = createStackNavigator(
         Detail: {
             screen: Detail,
             navigationOptions: {
-                title: '详情'
+                headerTitle: '详情'
+            }
+        },
+        Search: {
+            screen: Search,
+            navigationOptions: {
+                headerTitle: '搜索'
+            }
+        },
+        City: {
+            screen: City,
+            navigationOptions: {
+                headerTitle: '选择城市',
             }
         }
     }

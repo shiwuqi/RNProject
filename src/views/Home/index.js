@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, TouchableOpacity, View, Text, Image, FlatList } from 'react-native'
 import { getStatusBarHeight, width } from '../../utils/screen'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const cols = 4;
 const vMargin = 140;
@@ -59,12 +60,12 @@ export default class Home extends Component {
         ],
         foods: [],
         response: {},
-        refreshing: false
+        refreshing: false,
     }
 
     componentDidMount() {
         this.setState({
-            foods 
+            foods
         })
     }
 
@@ -91,13 +92,42 @@ export default class Home extends Component {
 
     _renderHeader = () => {
         return (
-            <FlatList
-                data={this.state.data}
-                renderItem={this._renderItem}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={cols}
-                horizontal={false}
-            />
+            <View>
+                <View style={styles.header}>
+                    <View style={[styles.headerContent, styles.FlexRow]}>
+                        <Image source={require('../../assets/mine/avatar_default.png')} style={styles.avatarImg}></Image>
+                        <TouchableOpacity style={styles.FlexRow} onPress={() => this.props.navigation.navigate('City')}>
+                            <Text style={{ marginRight: 4 }}>上海</Text>
+                            <Ionicons
+                                name='ios-arrow-down'
+                                size={16}
+                                style={{ marginRight: 10 }}></Ionicons>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.headerSearch, styles.FlexRow]} onPress={() => this.props.navigation.navigate('Search')}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Ionicons
+                                    name='ios-search'
+                                    size={16}
+                                    color='#999999'></Ionicons>
+                                <Text style={{ marginLeft: 4, color: '#999999' }}>搜“美食狂欢节”抢1元秒杀</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Ionicons
+                                name='ios-add'
+                                size={24}></Ionicons>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <FlatList
+                    data={this.state.data}
+                    renderItem={this._renderItem}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={cols}
+                    horizontal={false}
+                    style={{ marginBottom: 20 }}
+                />
+            </View>
         )
     }
 
@@ -114,17 +144,17 @@ export default class Home extends Component {
 
     _renderFoods = ({ item, index }) => {
         return (
-            <TouchableOpacity activeOpacity={0.9} onPress={() => this.props.navigation.navigate('Detail')}>
-                <View style={styles.foodItem}>
+            <TouchableOpacity activeOpacity={0.9} style={styles.listItem} onPress={() => this.props.navigation.navigate('Detail')}>
+                <View style={[styles.foodItem, styles.FlexRow]}>
                     <Image source={item.image} style={styles.foodImg}></Image>
                     <View style={{ flex: 1 }}>
                         <View style={styles.foodTitle}>
-                            <Text>{item.title}</Text>
+                            <Text style={{ fontSize: 16 }}>{item.title}</Text>
                         </View>
                         <View style={styles.foodSubTitle}>
                             <Text style={styles.foodSubTitleText}>{item.subTitle}</Text>
                         </View>
-                        <View style={styles.foodDetail}>
+                        <View style={[styles.foodDetail, styles.FlexRow]}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={{ marginRight: 4, fontSize: 16, color: '#F60' }}>{item.price}元</Text>
                                 <Text style={{ fontSize: 12, color: '#666' }}>门市价:{item.prePrice}元</Text>
@@ -140,9 +170,8 @@ export default class Home extends Component {
     }
 
     render() {
-        const paddingBar = getStatusBarHeight()
         return (
-            <View style={{ paddingTop: paddingBar }}>
+            <View>
                 <FlatList
                     ListHeaderComponent={this._renderHeader}
                     data={this.state.foods}
@@ -157,11 +186,40 @@ export default class Home extends Component {
     }
 }
 
+const paddingBar = getStatusBarHeight()
+
 const styles = StyleSheet.create({
+    FlexRow: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     container: {
         flex: 1,
         backgroundColor: '#f0efed',
         paddingVertical: 15
+    },
+    header: {
+        paddingTop: paddingBar,
+        paddingBottom: 10,
+        backgroundColor: '#00d3be'
+    },
+    headerContent: {
+        height: 40,
+        paddingHorizontal: 10,
+    },
+    headerSearch: {
+        height: 30,
+        flex: 1,
+        paddingLeft: 6,
+        marginRight: 10,
+        borderRadius: 6,
+        backgroundColor: '#fff'
+    },
+    avatarImg: {
+        width: 34,
+        height: 34,
+        borderRadius: 17,
+        marginRight: 6,
     },
     list_container: {
         flexDirection: 'row',
@@ -173,7 +231,7 @@ const styles = StyleSheet.create({
         width: cellWH,
         marginLeft: 16,
         marginRight: 20,
-        marginTop: hMargin,
+        marginTop: 10,
         alignItems: 'center',
     },
     itemImg: {
@@ -186,12 +244,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 13
     },
+    listItem: {
+        paddingLeft: 10,
+    },
     foodItem: {
         width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 20,
-        paddingHorizontal: 10
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingRight: 10,
+        borderBottomWidth: 1,
+        borderColor: '#DDD8CE'
     },
     foodImg: {
         width: 70,
@@ -204,15 +266,13 @@ const styles = StyleSheet.create({
         color: '#333'
     },
     foodSubTitle: {
-        marginBottom: 12
+        marginBottom: 14
     },
     foodSubTitleText: {
         fontSize: 12,
         color: '#666'
     },
     foodDetail: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        justifyContent: 'space-between'
     }
 })
