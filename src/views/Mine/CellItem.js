@@ -23,7 +23,7 @@ class CellItem extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 1,
+        borderWidth: 0.2,
         borderColor: '#e9e9e9',
         backgroundColor: '#fff'
     },

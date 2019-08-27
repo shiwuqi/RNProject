@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, TouchableOpacity, View, Text, Image, FlatList } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Text, Image, FlatList, Modal, TouchableHighlight } from 'react-native'
 import { getStatusBarHeight, width } from '../../utils/screen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import Popover from '../../components/Popover'
 
 const cols = 4;
 const vMargin = 140;
@@ -61,6 +62,7 @@ export default class Home extends Component {
         foods: [],
         response: {},
         refreshing: false,
+        isShowPopover: false,
     }
 
     componentDidMount() {
@@ -90,6 +92,10 @@ export default class Home extends Component {
         }
     }
 
+    closePopover = () => {
+        this.setState({ isShowPopover: false });
+    }
+
     _renderHeader = () => {
         return (
             <View>
@@ -112,7 +118,11 @@ export default class Home extends Component {
                                 <Text style={{ marginLeft: 4, color: '#999999' }}>搜“美食狂欢节”抢1元秒杀</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            this.setState({
+                                isShowPopover: true
+                            })
+                        }}>
                             <Ionicons
                                 name='ios-add'
                                 size={24}></Ionicons>
@@ -181,6 +191,24 @@ export default class Home extends Component {
                     refreshing={this.state.refreshing}
                     keyExtractor={(item, index) => index.toString()}
                 />
+                <Popover isShowPopover={this.state.isShowPopover}>
+                    <View style={styles.popover}>
+                        <TouchableOpacity style={[styles.popoverItem, styles.FlexRow]} onPress={this.closePopover}>
+                            <Ionicons
+                                name='ios-qr-scanner'
+                                size={18}
+                                style={{ marginRight: 5, color: '#fff' }}></Ionicons>
+                            <Text style={{ color: '#fff' }}>扫一扫</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.popoverItem, styles.FlexRow]} onPress={this.closePopover}>
+                            <Ionicons
+                                name='ios-airplane'
+                                size={18}
+                                style={{ marginRight: 8, color: '#fff' }}></Ionicons>
+                            <Text style={{ color: '#fff' }}>机票</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Popover>
             </View>
         )
     }
@@ -274,5 +302,20 @@ const styles = StyleSheet.create({
     },
     foodDetail: {
         justifyContent: 'space-between'
-    }
+    },
+    popover: {
+        position: 'absolute',
+        top: paddingBar + 40,
+        right: 10,
+        width: 100,
+        backgroundColor: '#696969',
+        borderRadius: 4,
+    },
+    popoverItem: {
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderWidth: 0.2,
+        borderColor: '#fff'
+    },
 })
