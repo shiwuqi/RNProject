@@ -192,6 +192,7 @@ export default class Home extends Component {
                     keyExtractor={(item, index) => index.toString()}
                 />
                 <Popover isShowPopover={this.state.isShowPopover}>
+                    <TouchableOpacity style={styles.popoverContainer} onPress={this.closePopover}></TouchableOpacity>
                     <View style={styles.popover}>
                         <TouchableOpacity style={[styles.popoverItem, styles.FlexRow]} onPress={this.closePopover}>
                             <Ionicons
@@ -302,6 +303,10 @@ const styles = StyleSheet.create({
     },
     foodDetail: {
         justifyContent: 'space-between'
+    },
+    popoverContainer: {
+        width: '100%',
+        height: '100%'
     },
     popover: {
         position: 'absolute',

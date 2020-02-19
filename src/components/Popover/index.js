@@ -24,10 +24,7 @@ export default class Popover extends React.Component {
                 <Modal
                     animationType='fade'
                     visible={this.state.isShowPopover}
-                    transparent={true}
-                    onRequestClose={() => {
-
-                    }}>
+                    transparent={true}>
                     {this.props.children}
                 </Modal>
             </View>
